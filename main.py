@@ -1,3 +1,5 @@
+###[TP6 : Le codage binaire]###
+#Declaration des classes
 class Logic : 
 	"""Implementation des portes logiques"""
 	def nand(a,b) :
@@ -183,6 +185,7 @@ class NaturalBinaryNumber(object) :
 
 	def __mul__(self,b) : 
 		"""appel lors de l'utilisation de *, multiplier deux nombres binaires sans passer par le decimal"""
+		raise NotImpletedError("La multiplication n'est pas fonctionnelle")
 		assert isinstance(b,NaturalBinaryNumber),"Impossible d'additionner un nombre non-binaire."
 		d1 = self.data
 		d2 = b.data
@@ -208,13 +211,7 @@ class NaturalBinaryNumber(object) :
 			print("_" * 50)
 
 		return response
-
-
-
-
-
-
-
+#Programme principal
 n1 = NaturalBinaryNumber(10)
 n2 = NaturalBinaryNumber(5)
 n3 = n2 * n1
