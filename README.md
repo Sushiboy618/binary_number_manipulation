@@ -1,17 +1,19 @@
 # NSI : TP6 : Le codage binaire
 ## To-do list
-### Les nombres entiers naturels binarires
-- [x] Implémentaiton des nombres entiers naturels binaires
-- [x] Implémentation de la soustraction des nombres entiers naturels binaires
-- [x] Implémentation de l'addition des nombres entiers naturels binaires
-- [ ] (facultatif) Implémentation de la multiplication des nombres entiers naturels binaires
-### Les nombres entiers relatifs binarires
-- [ ] Implémentation des nombres entiers relatifs binaires
-- [ ] Implémentation de l'addition des nombres entiers relatifs binaires
-- [ ] Implémentation de la soustraction des nombres entiers relatifs binaires
-- [ ] (facultatif) Implémentation de la multiplication des nombres entiers relatifs binaires
-### Les nombres entiers naturels hexadécimaux
-- [ ] Implémentation des nombres entiers naturels hexadécimaux
-- [ ] (facultatif) Implémentation de l'addition des nombres entiers naturels hexadécimaux
-- [ ] (facultatif) Implémentation de la soustraction des nombres entiers naturels hexadécimaux
-- [ ] (facultatif) Implémentation de la multiplication des nombres entiers naturels hexadécimaux
+- [x] Conversion de décimal (naturels ou relatifs) en binaire
+- [x] Conversion de binaire naturels en décimal
+- [x] Conversion de binaire relatif en décimal
+- [x] Addition des nombres binaires 
+- [x] Implémenter l'opposé d'un nombre binaire (naturels ou relatifs)
+- [ ] Soustraction des nombres binaires
+- [ ] Multiplication des nombres binaires 
+- [ ] Conversion de décimal en hexadécimal 
+###Facultatifs : 
+- [ ] Conversion d'héxadecimal naturel en décimal
+- [ ] Conversion d'héxadecimal relatif en décimal 
+- [ ] Division des nombres binaires
+- [ ] Addition des nombres hexadecimaux
+- [ ] Soustraction des nombres hexadecimaux 
+- [ ] Multiplication des nombres hexadecimaux 
+- [ ] Division des nombres hexadecimaux 
+- [ ] Mis sous forme de classe
