@@ -1,4 +1,5 @@
 ##Declaration des constantes
+#v2
 OCTETS = 1
 BITS = 8 * OCTETS
 VERBOSE = 1
