@@ -1,19 +1,42 @@
-##Declaration des constantes
-#v2
-OCTETS = 1
-BITS = 8 * OCTETS
-VERBOSE = 1
-VERBOSE_N1 = 42
-VERBOSE_N2 = 11
-VERBOSE_R1 = 42
-VERBOSE_R2 = -11
-VERBOSE_BN1 = [0, 1, 0, 0, 1, 1, 0, 0] #76
-VERBOSE_BN2 = [0, 0, 1, 0, 1, 0, 1, 0] #42
-VERBOSE_BR1 = [1, 0, 1, 1, 0, 1, 0, 0] #-76
-VERBOSE_BR2 = [1, 1, 0, 1, 0, 1, 1, 0] #-42
+###NSI : TP 6 ###
+
+
+## Importation de modules
+try : 
+	a = 1/0
+	from colorama import Fore, Style
+except : 
+	print("[-] ATTENTION : Le module colorama (coloration du texte) n'a pas pu etre importé")
+	class Fore : 
+		WHITE = ""
+		RED = ""
+		GREEN = ""
+	class Style : 
+		BRIGHT = ""
+		NORMAL = ""
+
+
 ##Fonctions
+def demo(function,wanted,*args) : 
+	"""Vérfifier si une fonction fonctionne correctement
+	params : 
+		function : func ; la fonction a tester
+		wanted : list ; la valeur attendue
+		*args : les arg de la fonction
+	return : None
+	"""
+	print(Fore.WHITE + Style.BRIGHT + f"# Execution de la fonction {function.__name__}")
+	print(Fore.WHITE + Style.NORMAL + f"[*] Params : {args}")
+	print(Fore.WHITE + Style.NORMAL + f"[*] Resultat voulu : {wanted}")
+	result = function(*args)	
+	print(Fore.WHITE + Style.NORMAL + f"[+] Resultat       : {result}")
+	valid = result == wanted
+	if valid : print(Fore.GREEN + "[+] La fonction est valide")
+	else : print(Fore.RED + "[-] La fonction a un problème")
+	print(Fore.WHITE + Style.NORMAL + "_" * 20)
+
 #1) Conversion de base10 en base2
-def DecToBin(base10) :
+def decToBin(base10) :
 	"""Convertit un nombre entier naturel en base 10 en base 2
 	params :
 		base10 : int ; le nombre en base 10
@@ -27,20 +50,8 @@ def DecToBin(base10) :
 	response.reverse()
 	return response
 
-if VERBOSE :
-	#conversion de base10 en base2 avec un nombre entier naturel
-	print(f"[*] conversion de {VERBOSE_N1} en binaire : ")
-	print(f"[+] Valeur trouvée : {DecToBin(VERBOSE_N1)}")
-	print(f"[+] Valeur souhaitee : {bin(VERBOSE_N1)}")
-	print()
-	#conversion de base10 en base2 avec un nombre entier relatif
-	print(f"[*] conversion de {VERBOSE_R2} en binaire : ")
-	print(f"[+] Valeur trouvée : {DecToBin(VERBOSE_R2)}")
-	print(f"[+] Valeur souhaitee : {bin((2**BITS)+VERBOSE_R2)}")
-	print("_" * 50)
-
 #2) Conversion d'entier naturel binaire en base 10
-def NaturalBinToDec(base2) :
+def naturalBinToDec(base2) :
 	"""Convertit un nombre entier naturel base 2 en base 10
 	params :
 		base2 : int ; le nombre entier naturel en base2
@@ -54,14 +65,8 @@ def NaturalBinToDec(base2) :
 		power -= 1
 	return response
 
-if VERBOSE :
-	print(f"[*] Conversion de {VERBOSE_BN1} (76) en base 10")
-	print(f"[+] Valeur trouvee :  {NaturalBinToDec(VERBOSE_BN1)}")
-	print(f"[+] Valeur souhaitee : 76")
-	print("_" * 50)
-
 #3) Conversion d'entier relatif binaire en base 10
-def RelativeBinToDec(base2) :
+def relativeBinToDec(base2) :
 	"""Convertit un nombre entier relatif en base 2 en base 10
 	params :
 		base2: int ; le nombre entier relatif en base 2
@@ -76,12 +81,6 @@ def RelativeBinToDec(base2) :
 		power -= 1
 	return response
 
-if VERBOSE :
-	print(f"[*] Conversion de {VERBOSE_BR1} (-76) en base 10")
-	print(f"[+] Valeur trouvee :  {RelativeBinToDec(VERBOSE_BR1)}")
-	print(f"[+] Valeur souhaitee : -76")
-	print("_" * 50)
-
 #3) Addition des nombres entiers naturels binaires
 def addBinaryNumbers(bn1,bn2) :
 	"""Additioner deux nombres entiers naturels/relatifs binaires
@@ -93,6 +92,7 @@ def addBinaryNumbers(bn1,bn2) :
 	"""
 	cache1 = bn1[:]
 	cache2 = bn2[:]
+	#print(cache1,cache2)
 	carry = int()
 	response = list()
 	cache1.reverse()
@@ -101,6 +101,7 @@ def addBinaryNumbers(bn1,bn2) :
 	for i in range(BITS) :
 		#s = a xor b xor carry
 		#carry = (a or b) and (a or carry) and (b or carry)
+		#print(i)		
 		a = cache1[i]
 		b = cache2[i]
 		s = a^b^carry
@@ -109,18 +110,8 @@ def addBinaryNumbers(bn1,bn2) :
 	response.reverse()
 	return response
 
-if VERBOSE :
-	print(f"[*] Addition de {VERBOSE_BN1} + {VERBOSE_BN2} = 118")
-	print(f"[+] Valeur trouvee : {addBinaryNumbers(VERBOSE_BN1,VERBOSE_BN2)}")
-	print(f"[+] Valeur souhaitee : {bin(118)}")
-	print()
-	print(f"[*] Addition de {VERBOSE_BR1} + {VERBOSE_BR2} = -118")
-	print(f"[+] Valeur trouvee : {addBinaryNumbers(VERBOSE_BR1,VERBOSE_BR2)}")
-	print(f"[+] Valeur souhaitee : {bin((2**BITS)-118)}")
-	print("_" * 50)
-
 #4) oppose
-def Oppose(base2) :
+def oppose(base2) :
 	"""Avoir l'opppose d'un nombre binaire
 	params :
 		base2 : list ; le nombre a convertir
@@ -130,18 +121,120 @@ def Oppose(base2) :
 	response = list()
 	for elem in base2 :
 		response.append(int(not elem))
-	one = DecToBin(1)
+	one = decToBin(1)
 	response = addBinaryNumbers(response,one)
 	return response
 
-if VERBOSE :
-	print(f"Calcul de l'oppose de {VERBOSE_BN1} (76) = -76")
-	print(f"[+] Valeur trouvee : {Oppose(VERBOSE_BN1)}")
-	print(f"[+] Valeur souhaitee : {DecToBin(-76)}")
-	print()
-	print(f"Calcul de l'oppose de {VERBOSE_BR2} (-42) = 42")
-	print(f"[+] Valeur trouvee : {Oppose(VERBOSE_BR2)}")
-	print(f"[+] Valeur souhaitee : {DecToBin(42)}")
-	print("_" * 50)
+#5) La soustraction
+def subBinaryNumbers(b1,b2) :
+	"""Retrancher deux nombres entiers naturels/relatifs binaires
+	params :
+		b1 : int ; le premier nombre
+		b2 : int ; le deuxieme nombre
+	return : list ; le resultat
+	"""
+	return addBinaryNumbers(b1,oppose(b2))
+#6) La multiplication
+def multiplyBinary(bin1, bin2):
+	# Initialisation du résultat
+	result = [0] * (BITS)
+    
+	# Inversion des listes pour faciliter le calcul
+	bin1.reverse()
+	bin2.reverse()
+    
+	for i in range(len(bin1)):
+		if bin1[i] == 1:
+			carry = 0
+			for j in range(len(bin2)):
+				if j + i < BITS:
+					temp_sum = result[j + i] + bin2[j] + carry
+					result[j + i] = temp_sum % 2  # Récupération du bit de poids faible
+					carry = temp_sum // 2  # Récupération du bit de poids fort
+    
+	definitif = result[:BITS]
+	definitif.reverse()    
+	return definitif  # Retourne le résultat tronqué à BITS
 
-def subBinaryNumber(b1,b2) :
+
+## Programme principal
+
+##Declaration des constantes
+OCTETS = 2
+BITS = 8 * OCTETS
+VERBOSE = 0
+VERBOSE_1 = [42 , [*[0,] * (BITS-8),0, 0, 1, 0, 1, 0, 1, 0]]
+VERBOSE_2 = [76 , [*[0,] * (BITS-8),0, 1, 0, 0, 1, 1, 0, 0]]
+VERBOSE_3 = [-76 , [*[1,] * (BITS-8),1, 0, 1, 1, 0, 1, 0, 0]]
+VERBOSE_4 = [-42 , [*[1,] * (BITS-8),1, 1, 0, 1, 0, 1, 1, 0]]
+VERBOSE_1plus2 = [118 , [*[0,] * (BITS-8),0,1,1,1,0,1,1,0]]
+VERBOSE_2plus4 = [34 , [*[0,] * (BITS-8),0,0,1,0,0,0,1,0]]
+
+demo(multiplyBinary,decToBin(12),decToBin(3),decToBin(4))
+
+if VERBOSE : 
+	print(Fore.RED + Style.BRIGHT + "### NSI : TP 6 ###")
+
+	# Conversion de décimal en binaire
+	demo(decToBin,VERBOSE_1[1],VERBOSE_1[0])
+	demo(decToBin,VERBOSE_4[1],VERBOSE_4[0])
+	print()
+
+	# Conversion de binaire naturel en decimal
+	demo(naturalBinToDec,VERBOSE_1[0],VERBOSE_1[1])
+	print()
+
+	# Conversion de binaire relatif en décimal
+	demo(relativeBinToDec,VERBOSE_4[0],VERBOSE_4[1])
+	print()
+
+	# Addition des nombres biniaires
+	demo(addBinaryNumbers,VERBOSE_1plus2[1],VERBOSE_1[1],VERBOSE_2[1])
+	demo(addBinaryNumbers,VERBOSE_2plus4[1],VERBOSE_2[1],VERBOSE_4[1])
+	print()
+
+	# Opposé d'un nombre binaire
+	demo(oppose,VERBOSE_4[1],VERBOSE_1[1])
+	demo(oppose,VERBOSE_2[1],VERBOSE_3[1])
+	print()
+ 	
+	# Soustraction de nombres biniares
+	demo(subBinaryNumbers,VERBOSE_2[1],VERBOSE_1plus2[1],VERBOSE_1[1])
+	demo(subBinaryNumbers,VERBOSE_4[1],VERBOSE_2plus4[1],VERBOSE_2[1])
+	print()
+	
+	
+print(Fore.RED + Style.BRIGHT + "Programme termine. Bonne journee")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
