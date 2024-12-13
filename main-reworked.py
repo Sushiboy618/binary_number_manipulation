@@ -1,9 +1,6 @@
 ###NSI : TP 6 ###
-
-
 ## Importation de modules
 try : 
-	a = 1/0
 	from colorama import Fore, Style
 except : 
 	print("[-] ATTENTION : Le module colorama (coloration du texte) n'a pas pu etre importé")
@@ -135,42 +132,49 @@ def subBinaryNumbers(b1,b2) :
 	"""
 	return addBinaryNumbers(b1,oppose(b2))
 #6) La multiplication
-def multiplyBinary(bin1, bin2):
-	# Initialisation du résultat
-	result = [0] * (BITS)
-    
-	# Inversion des listes pour faciliter le calcul
-	bin1.reverse()
-	bin2.reverse()
-    
-	for i in range(len(bin1)):
-		if bin1[i] == 1:
-			carry = 0
-			for j in range(len(bin2)):
-				if j + i < BITS:
-					temp_sum = result[j + i] + bin2[j] + carry
-					result[j + i] = temp_sum % 2  # Récupération du bit de poids faible
-					carry = temp_sum // 2  # Récupération du bit de poids fort
-    
-	definitif = result[:BITS]
-	definitif.reverse()    
-	return definitif  # Retourne le résultat tronqué à BITS
+def multiplyBinaryNumbers(bin1, bin2):
+	#return "Methode non implementee"
+	d1 = bin1[:]
+	d2 = bin2[:]
+	
+	d1.reverse()
+	d2.reverse()
+	
+	temp_sum = list()	
+	for i,elem in enumerate(d1) : 
+		temp = list()
+		for elem2 in d2 : 
+			temp.append(int(elem and elem2))
+		temp.extend([0,] * i)
+		temp.reverse()
+		temp_sum.append(temp[:(BITS+1)])
+	
+	final = decToBin(0)	
+	for elem in temp_sum : 
+		final = addBinaryNumbers(elem,final)
+	return final
+		
+			
 
 
 ## Programme principal
 
 ##Declaration des constantes
-OCTETS = 2
+OCTETS = 1
 BITS = 8 * OCTETS
-VERBOSE = 0
+VERBOSE = 1
 VERBOSE_1 = [42 , [*[0,] * (BITS-8),0, 0, 1, 0, 1, 0, 1, 0]]
 VERBOSE_2 = [76 , [*[0,] * (BITS-8),0, 1, 0, 0, 1, 1, 0, 0]]
 VERBOSE_3 = [-76 , [*[1,] * (BITS-8),1, 0, 1, 1, 0, 1, 0, 0]]
 VERBOSE_4 = [-42 , [*[1,] * (BITS-8),1, 1, 0, 1, 0, 1, 1, 0]]
+VERBOSE_5 = [3 , [*[0,] * (BITS-8),0,0,0,0,0,0,1,1]]
+VERBOSE_6 = [-3 , [*[1,] * (BITS-8),0,1,1,1,1,1,0,1]]
 VERBOSE_1plus2 = [118 , [*[0,] * (BITS-8),0,1,1,1,0,1,1,0]]
 VERBOSE_2plus4 = [34 , [*[0,] * (BITS-8),0,0,1,0,0,0,1,0]]
+VERBOSE_1time5 = [126 , [*[0,] * (BITS-8),0,1,1,1,1,1,1,0]]
+VERBOSE_1time6 = [-126 , [*[1,] * (BITS-8),1,1,1,1,1,1,0,1]]
 
-demo(multiplyBinary,decToBin(12),decToBin(3),decToBin(4))
+#demo(multiplyBinary,decToBin(12),decToBin(3),decToBin(4))
 
 if VERBOSE : 
 	print(Fore.RED + Style.BRIGHT + "### NSI : TP 6 ###")
@@ -203,6 +207,10 @@ if VERBOSE :
 	demo(subBinaryNumbers,VERBOSE_4[1],VERBOSE_2plus4[1],VERBOSE_2[1])
 	print()
 	
+	#Mutiplication de nombres binaires
+	demo(multiplyBinaryNumbers,VERBOSE_1time5[1],VERBOSE_1[1],VERBOSE_5[1])
+	demo(multiplyBinaryNumbers,VERBOSE_1time6[1],VERBOSE_1[1],VERBOSE_6[1])
+	demo(multiplyBinaryNumbers,VERBOSE_1time5[1],VERBOSE_4[1],VERBOSE_6[1])
 	
 print(Fore.RED + Style.BRIGHT + "Programme termine. Bonne journee")
 
