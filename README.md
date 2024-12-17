@@ -8,7 +8,7 @@
 - [x] Soustraction des nombres binaires
 - [x] Multiplication des nombres binaires 
 - [ ] Conversion de décimal en hexadécimal 
-###Facultatifs : 
+### Facultatifs : 
 - [ ] Division des nombres binaires
 - [ ] Conversion d'héxadecimal naturel en décimal
 - [ ] Conversion d'héxadecimal relatif en décimal
