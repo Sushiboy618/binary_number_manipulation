@@ -1,22 +1,23 @@
 ###NSI : TP 6 ###
 ## Importation de modules
-try : 
+try :
+	a = 3/0 # lever une erreur car le module ne fonctionne pas sous windows
 	from colorama import Fore, Style
-except : 
+except :
 	print("[-] ATTENTION : Le module colorama (coloration du texte) n'a pas pu etre importé")
-	class Fore : 
+	class Fore :
 		WHITE = ""
 		RED = ""
 		GREEN = ""
-	class Style : 
+	class Style :
 		BRIGHT = ""
 		NORMAL = ""
 
 
 ##Fonctions
-def demo(function,wanted,*args) : 
+def demo(function,wanted,*args) :
 	"""Vérfifier si une fonction fonctionne correctement
-	params : 
+	params :
 		function : func ; la fonction a tester
 		wanted : list ; la valeur attendue
 		*args : les arg de la fonction
@@ -25,7 +26,7 @@ def demo(function,wanted,*args) :
 	print(Fore.WHITE + Style.BRIGHT + f"# Execution de la fonction {function.__name__}")
 	print(Fore.WHITE + Style.NORMAL + f"[*] Params : {args}")
 	print(Fore.WHITE + Style.NORMAL + f"[*] Resultat voulu : {wanted}")
-	result = function(*args)	
+	result = function(*args)
 	print(Fore.WHITE + Style.NORMAL + f"[+] Resultat       : {result}")
 	valid = result == wanted
 	if valid : print(Fore.GREEN + "[+] La fonction est valide")
@@ -98,7 +99,7 @@ def addBinaryNumbers(bn1,bn2) :
 	for i in range(BITS) :
 		#s = a xor b xor carry
 		#carry = (a or b) and (a or carry) and (b or carry)
-		#print(i)		
+		#print(i)
 		a = cache1[i]
 		b = cache2[i]
 		s = a^b^carry
@@ -132,29 +133,40 @@ def subBinaryNumbers(b1,b2) :
 	"""
 	return addBinaryNumbers(b1,oppose(b2))
 #6) La multiplication
-def multiplyBinaryNumbers(bin1, bin2):
-	#return "Methode non implementee"
+def multiplyRelativeBinaryNumbers(bin1, bin2):
 	d1 = bin1[:]
 	d2 = bin2[:]
-	
+	signe = d1[0] ^ d2[0]
+	if signe :
+		if d1[0] :
+			d1 = oppose(d1)
+		else :
+			d2= oppose(d2)
+	print(signe)
+
+
+
 	d1.reverse()
 	d2.reverse()
-	
-	temp_sum = list()	
-	for i,elem in enumerate(d1) : 
+
+	temp_sum = list()
+	for i,elem in enumerate(d1) :
 		temp = list()
-		for elem2 in d2 : 
+		for elem2 in d2 :
 			temp.append(int(elem and elem2))
-		temp.extend([0,] * i)
 		temp.reverse()
-		temp_sum.append(temp[:(BITS+1)])
-	
-	final = decToBin(0)	
-	for elem in temp_sum : 
+		temp.extend([0,] * i)
+		print(temp)
+		temp_sum.append(temp)
+
+	final = decToBin(0)
+	for elem in temp_sum :
 		final = addBinaryNumbers(elem,final)
+	if signe :
+		final = oppose(final)
 	return final
-		
-			
+
+
 
 
 ## Programme principal
@@ -168,15 +180,13 @@ VERBOSE_2 = [76 , [*[0,] * (BITS-8),0, 1, 0, 0, 1, 1, 0, 0]]
 VERBOSE_3 = [-76 , [*[1,] * (BITS-8),1, 0, 1, 1, 0, 1, 0, 0]]
 VERBOSE_4 = [-42 , [*[1,] * (BITS-8),1, 1, 0, 1, 0, 1, 1, 0]]
 VERBOSE_5 = [3 , [*[0,] * (BITS-8),0,0,0,0,0,0,1,1]]
-VERBOSE_6 = [-3 , [*[1,] * (BITS-8),0,1,1,1,1,1,0,1]]
+VERBOSE_6 = [-3 , [*[1,] * (BITS-8),1,1,1,1,1,1,0,1]]
 VERBOSE_1plus2 = [118 , [*[0,] * (BITS-8),0,1,1,1,0,1,1,0]]
 VERBOSE_2plus4 = [34 , [*[0,] * (BITS-8),0,0,1,0,0,0,1,0]]
 VERBOSE_1time5 = [126 , [*[0,] * (BITS-8),0,1,1,1,1,1,1,0]]
-VERBOSE_1time6 = [-126 , [*[1,] * (BITS-8),1,1,1,1,1,1,0,1]]
+VERBOSE_1time6 = [-126 , [*[1,] * (BITS-8),1, 0, 0, 0, 0, 0, 1, 0]]
 
-#demo(multiplyBinary,decToBin(12),decToBin(3),decToBin(4))
-
-if VERBOSE : 
+if VERBOSE :
 	print(Fore.RED + Style.BRIGHT + "### NSI : TP 6 ###")
 
 	# Conversion de décimal en binaire
@@ -201,48 +211,15 @@ if VERBOSE :
 	demo(oppose,VERBOSE_4[1],VERBOSE_1[1])
 	demo(oppose,VERBOSE_2[1],VERBOSE_3[1])
 	print()
- 	
+
 	# Soustraction de nombres biniares
 	demo(subBinaryNumbers,VERBOSE_2[1],VERBOSE_1plus2[1],VERBOSE_1[1])
 	demo(subBinaryNumbers,VERBOSE_4[1],VERBOSE_2plus4[1],VERBOSE_2[1])
 	print()
-	
+
 	#Mutiplication de nombres binaires
-	demo(multiplyBinaryNumbers,VERBOSE_1time5[1],VERBOSE_1[1],VERBOSE_5[1])
-	demo(multiplyBinaryNumbers,VERBOSE_1time6[1],VERBOSE_1[1],VERBOSE_6[1])
-	demo(multiplyBinaryNumbers,VERBOSE_1time5[1],VERBOSE_4[1],VERBOSE_6[1])
-	
+	demo(multiplyRelativeBinaryNumbers,VERBOSE_1time5[1],VERBOSE_1[1],VERBOSE_5[1])
+	demo(multiplyRelativeBinaryNumbers,VERBOSE_1time6[1],VERBOSE_1[1],VERBOSE_6[1])
+	demo(multiplyRelativeBinaryNumbers,VERBOSE_1time5[1],VERBOSE_4[1],VERBOSE_6[1])
+
 print(Fore.RED + Style.BRIGHT + "Programme termine. Bonne journee")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
