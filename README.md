@@ -6,12 +6,12 @@
 - [x] Addition des nombres binaires 
 - [x] Implémenter l'opposé d'un nombre binaire (naturels ou relatifs)
 - [x] Soustraction des nombres binaires
-- [ ] Multiplication des nombres binaires 
+- [x] Multiplication des nombres binaires 
 - [ ] Conversion de décimal en hexadécimal 
 ###Facultatifs : 
-- [ ] Conversion d'héxadecimal naturel en décimal
-- [ ] Conversion d'héxadecimal relatif en décimal 
 - [ ] Division des nombres binaires
+- [ ] Conversion d'héxadecimal naturel en décimal
+- [ ] Conversion d'héxadecimal relatif en décimal
 - [ ] Addition des nombres hexadecimaux
 - [ ] Soustraction des nombres hexadecimaux 
 - [ ] Multiplication des nombres hexadecimaux 
